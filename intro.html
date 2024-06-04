@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="/css/common.css" />
+        <style>
+            body {
+                font-family: 'MinervaMorden-Black';
+            }
+            .collector-t {
+                font-size: 64px;
+            }
+            .collector-b {
+                font-size: 36px;
+            }
+            .slogan {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-family: 'Pretendard-ExtraBold';
+                font-size: 28px;
+                transition: 1.2s;
+            }
+            svg {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                fill: #292929;
+            }
+            svg.logo {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                animation: stroke 5s 1 alternate;
+                fill: #292929;
+            }
+            @keyframes stroke {
+                0% {
+                    stroke-dashoffset: 20% 0%;
+                    stroke-dasharray: 0% 20%;
+                    fill: rgba(41, 41, 41, 0);
+                    stroke: #292929;
+                    stroke-width: 0.5;
+                }
+                40% {
+                    stroke-dashoffset: 10%;
+                    stroke-dasharray: 33%;
+                    fill: rgba(41, 41, 41, 0);
+                    stroke-width: 1;
+                }
+                60% {
+                    stroke-dashoffset: 0% 30%;
+                    stroke-dasharray: 50% 0%;
+                    fill: #292929;
+                    stroke: rgba(41, 41, 41, 1);
+                    stroke-width: 0.5;
+                }
+                100% {
+                    fill: #292929;
+                    stroke: rgba(41, 41, 41, 0.5);
+                    stroke-width: 0.5;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="slogan">
+            <p></p>
+        </div>
+        <script>
+            const slogan = document.querySelector('.slogan');
+            async function loadingLayer() {
+                // await setTimeout(() => {
+                //     new TypeIt(".slogan > p", {
+                //       speed: 70,
+                //       waitUntilVisible: true,
+                //       loop: false,
+                //       })
+                //       .type("전세계의 모든 아트 컬렉션을 한 눈에")
+                //       .go();
+                // }, 300);
+
+                // await setTimeout(() => {
+                //   slogan.style.opacity = 0;
+                // }, 3400);
+                await setTimeout(() => {
+                    slogan.insertAdjacentHTML(
+                        'afterend',
+                        `
+            <svg class="logo" viewBox="0 0 1320 300">
+              <text class='collector-t'x="50%" y="27%" dy="60px" text-anchor="middle">Collector</text>
+              <text class='collector-b'x="50%" y="52%" dy="34px" text-anchor="middle">2 0 3 0</text>
+            </svg>
+          `,
+                    );
+                }, 300);
+            }
+            loadingLayer();
+        </script>
+        <script src="/js/typeit.min.js"></script>
+    </body>
+</html>

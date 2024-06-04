@@ -1,0 +1,190 @@
+@charset "UTF-8";
+@font-face {
+  font-family: "MinervaMorden-Black";
+  src: url("../font/minervamodern-black.ttf");
+}
+@font-face {
+  font-family: "MinervaMorden-Bold";
+  src: url("../font/minervamodern-bold.ttf");
+}
+@font-face {
+  font-family: "Pretendard-Bold";
+  src: url("../font/Pretendard-Bold.ttf");
+}
+@font-face {
+  font-family: "Pretendard-ExtraBold";
+  src: url("../font/Pretendard-ExtraBold.ttf");
+}
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("../font/Pretendard-Regular.ttf");
+}
+@keyframes stroke {
+  0% {
+    stroke-dashoffset: 20% 0%;
+    stroke-dasharray: 0% 20%;
+    fill: rgba(41, 41, 41, 0);
+    stroke: #292929;
+    stroke-width: 0.5;
+  }
+  40% {
+    stroke-dashoffset: 10%;
+    stroke-dasharray: 33%;
+    fill: rgba(41, 41, 41, 0);
+    stroke-width: 1;
+  }
+  60% {
+    stroke-dashoffset: 0% 30%;
+    stroke-dasharray: 50% 0%;
+    fill: #292929;
+    stroke: rgb(41, 41, 41);
+    stroke-width: 0.5;
+  }
+  100% {
+    fill: #292929;
+    stroke: rgba(41, 41, 41, 0.5);
+    stroke-width: 0.5;
+  }
+}
+body {
+  overflow-y: hidden;
+}
+
+.intro-section {
+  height: 200vh;
+  position: relative;
+  overflow: hidden;
+}
+.intro-section .parallax-element {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateZ(0);
+}
+.intro-section .background {
+  position: relative;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: contain;
+  background-attachment: fixed;
+  z-index: 1;
+}
+.intro-section .background::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.intro-section .gister-UFO {
+  top: 300px;
+  left: -300px;
+  width: 300px;
+  height: 300px;
+  z-index: 3;
+  border-radius: 50%;
+}
+.intro-section .gister-UFO > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.intro-section .gistar-UFO {
+  bottom: 500px;
+  right: -150px;
+  width: 200px;
+  height: 200px;
+  z-index: 3;
+}
+.intro-section .gistar-UFO > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.intro-section .title {
+  position: fixed;
+  font-family: "MinervaMorden-Black";
+  color: white;
+  text-align: center;
+  width: 100%;
+  height: auto;
+  z-index: 2;
+  top: 50%; /* 초기 위치 조정 */
+  transform: scale(1) translateY(-50%);
+}
+.intro-section .title svg.logo {
+  animation: stroke 5s 1 alternate;
+  fill: #292929;
+}
+.intro-section .sub-title {
+  display: block;
+  position: absolute;
+  bottom: 55%;
+  right: 5%;
+  font-size: 18px;
+  opacity: 0;
+  font-family: "Pretendard-Bold";
+}
+.intro-section .sub-title span {
+  display: block;
+  text-align: right;
+}
+.intro-section .sub-title.active {
+  opacity: 1;
+  animation: aps 0.5s 1 alternate;
+}
+.intro-section .sub-title.unactive {
+  opacity: 0;
+  animation: rps 0.5s 1 alternate;
+}
+
+@keyframes aps {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes rps {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.intro-content {
+  position: relative;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* 높이를 충분히 주어 스크롤 생성 */
+  background-image: url(/img/intro-ufo.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center 80%;
+  padding: 20px;
+  box-sizing: border-box;
+  font-size: 3rem;
+  color: #fff;
+  z-index: 3;
+}
+.intro-content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #000;
+  opacity: 0.3;
+}
+.intro-content p {
+  z-index: 1;
+  text-align: center;
+  margin: 0 auto;
+  font-size: 36px;
+}
