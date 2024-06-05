@@ -77,10 +77,10 @@ body {
 
   .gister-UFO {
     top: 300px;
-    left: -300px;
+    right: 100%;
     width: 300px;
     height: 300px;
-    z-index: 3;
+    z-index: 4;
     border-radius: 50%;
     > img {
       display: block;
@@ -91,7 +91,7 @@ body {
 
   .gistar-UFO {
     bottom: 800px;
-    right: -150px;
+    left: 100%;
     width: 200px;
     height: 200px;
     z-index: 3;

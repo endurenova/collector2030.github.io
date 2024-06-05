@@ -21,6 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
       logoTopSize = windowWidth / 2;
       logoBottomSize = windowWidth / 3.16;
       viewBoxH = windowHeight;
+      if (windowHeight >= windowWidth * 2) {
+        viewBoxH = windowHeight;
+      } else {
+        viewBoxH = windowHeight * 1.2;
+      }
     }
   };
 
