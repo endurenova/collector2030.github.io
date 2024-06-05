@@ -4,50 +4,128 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Three.js GLTF Example</title>
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/common.css" />
     <style>
       body {
         margin: 0;
-        background-color: aliceblue;
       }
       canvas {
         display: block;
       }
+      .BM {
+        position: absolute;
+        color: 1111111;
+        width: 90%;
+        height: 80%;
+        margin: 0 auto;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #1d1611;
+      }
+      .BM > h1 {
+        text-align: center;
+        font-family: 'Pretendard-Bold';
+        font-size: 48px;
+      }
+      .BM > ul {
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: space-around;
+        align-content: space-around;
+        height: 100%;
+      }
+      .BM > ul > li {
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+        font-family: 'Pretendard-Bold';
+        font-size: 24px;
+        width: 25%;
+        height: 30%;
+      }
+      .BM > ul > li > img {
+        width: 60%;
+        height: 100%;
+        margin: 0 3%;
+      }
+      .BM > ul > li > span {
+        text-wrap: nowrap;
+      }
+      .ccc {
+        height: 500px;
+        width: 100%;
+        background: #f00;
+      }
     </style>
   </head>
   <body>
+    <div class="ccc">ddd</div>
+    <div class="BM">
+      <h1>비지니스 모델</h1>
+      <ul>
+        <li><img src="/img/index_arttoy.png" alt="" /><span>아트토이</span></li>
+        <li><img src="/img/index_artcollection.png" alt="" /><span>아트컬렉션</span></li>
+        <li><img src="/img/index_goods.png" alt="" /><span>굿즈</span></li>
+        <li><img src="/img/index_fashion.png" alt="" /><span>패션</span></li>
+        <li><img src="/img/index_webtoon.png" alt="" /><span>웹툰</span></li>
+        <li><img src="/img/index_flagship.png" alt="" /><span>플래그십 스토어</span></li>
+      </ul>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
     <script>
       // 장면(Scene) 생성
       const scene = new THREE.Scene();
-
+      // 정면 z, 위아래 y, 좌우 x
       // 카메라(Camera) 생성
       const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      camera.position.z = 7;
+      camera.position.z = 10;
+      camera.position.y = 1;
 
       // 렌더러(Renderer) 생성
-      const renderer = new THREE.WebGLRenderer();
+      const renderer = new THREE.WebGLRenderer({});
       renderer.setSize(window.innerWidth, window.innerHeight);
       document.body.appendChild(renderer.domElement);
-      renderer.setClearColor(0xeeeeee);
+      renderer.setClearColor(0xffffff);
       // 조명(Light) 추가
-      const light_1 = new THREE.DirectionalLight(0xffffff, 0.5);
+      // AmbientLight, HemisphereLight, DirectionalLight, PointLight, SpotLight, RectAreaLight
+
+      // let light = new THREE.HemisphereLight(0xffff00, 0xff0000, 0.3);
+      // let light = new THREE.PointLight(0xffffff, 0.5, 15, 3); (color, intensity, distance, decay);
+      // let light = new THREE.SpotLight(0x00ff00, 1, 30, Math.PI * 0.2, 0.1, 1); (color, intensity, distance, angle, penumbra, decay);
+      // let light = new THREE.RectAreaLight(0xffff00, 0.5, 20, 20); (color, intensity, width, height);
+      const light_1 = new THREE.AmbientLight(0xffffff, 0.6);
       const light_2 = new THREE.DirectionalLight(0xffffff, 1);
-      const light_3 = new THREE.DirectionalLight(0xffffff, 1);
-      light_1.position.set(10, 10, 10).normalize();
-      light_2.position.set(0, 10, 0).normalize();
-      light_3.position.set(0, 0, 10).normalize();
-      scene.add(light_1, light_2, light_3);
+      light_2.position.set(0, 200, 200).normalize();
+      scene.add(light_1, light_2);
 
       // GLTFLoader를 사용하여 GLTF 파일 로드
       const loader = new THREE.GLTFLoader();
-      let model;
+      let model1, model2;
 
       loader.load(
-        'gistar_basic.glb', // GLB 파일 경로
+        'gister_basic.glb', // 첫 번째 GLB 파일 경로
         function (gltf) {
-          model = gltf.scene;
-          scene.add(model); // 로드한 GLTF 모델을 씬에 추가
+          model1 = gltf.scene;
+          model1.position.x = -2; // 첫 번째 모델 위치 설정
+          model1.position.y = 1.5; // 첫 번째 모델 위치 설정
+          scene.add(model1); // 첫 번째 GLB 모델을 씬에 추가
+        },
+        undefined,
+        function (error) {
+          console.error(error); // 로드 오류 처리
+        },
+      );
+
+      loader.load(
+        'gistar_basic.glb', // 두 번째 GLB 파일 경로
+        function (gltf) {
+          model2 = gltf.scene;
+          model2.position.x = 2; // 두 번째 모델 위치 설정
+          model2.position.y = 0.5;
+          scene.add(model2); // 두 번째 GLB 모델을 씬에 추가
         },
         undefined,
         function (error) {
@@ -60,9 +138,9 @@
         requestAnimationFrame(animate);
 
         // 모델 회전
-        if (model) {
-          model.rotation.x += 0.01;
-          model.rotation.y += 0.01;
+        if (model1) {
+          model1.rotation.y += 0.01;
+          model2.rotation.y += 0.01;
         }
 
         renderer.render(scene, camera);
