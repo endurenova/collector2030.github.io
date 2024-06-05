@@ -6,14 +6,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let logoTopSize = 0;
   let logoBottomSize = 0;
+  let viewBoxH = 0;
 
   checkDevice = () => {
     if (windowWidth >= windowHeight) {
       logoTopSize = windowWidth / 25;
       logoBottomSize = windowWidth / 39.5;
+      if (windowWidth >= windowHeight * 2) {
+        viewBoxH = windowHeight * 0.4;
+      } else {
+        viewBoxH = windowHeight * 0.3;
+      }
     } else if (windowWidth < windowHeight) {
       logoTopSize = windowWidth / 2;
       logoBottomSize = windowWidth / 3.16;
+      viewBoxH = windowHeight;
     }
   };
 
@@ -26,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
   async function loadingLayer() {
     await setTimeout(() => {
       intro.innerHTML = `
-          <svg class="logo" viewBox="0 0 1320 300">
+          <svg class="logo" viewBox="0 0 1320 ${viewBoxH}">
             <text style='font-size: ${logoTopSize}px;' class='collector-t'x="50%" y="27%" dy="${
         logoTopSize * 0.96
       }px" text-anchor="middle">Collector</text>

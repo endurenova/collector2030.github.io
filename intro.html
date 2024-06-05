@@ -1,111 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
-        <link rel="stylesheet" href="/css/common.css" />
-        <style>
-            body {
-                font-family: 'MinervaMorden-Black';
-            }
-            .collector-t {
-                font-size: 64px;
-            }
-            .collector-b {
-                font-size: 36px;
-            }
-            .slogan {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                font-family: 'Pretendard-ExtraBold';
-                font-size: 28px;
-                transition: 1.2s;
-            }
-            svg {
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                fill: #292929;
-            }
-            svg.logo {
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                animation: stroke 5s 1 alternate;
-                fill: #292929;
-            }
-            @keyframes stroke {
-                0% {
-                    stroke-dashoffset: 20% 0%;
-                    stroke-dasharray: 0% 20%;
-                    fill: rgba(41, 41, 41, 0);
-                    stroke: #292929;
-                    stroke-width: 0.5;
-                }
-                40% {
-                    stroke-dashoffset: 10%;
-                    stroke-dasharray: 33%;
-                    fill: rgba(41, 41, 41, 0);
-                    stroke-width: 1;
-                }
-                60% {
-                    stroke-dashoffset: 0% 30%;
-                    stroke-dasharray: 50% 0%;
-                    fill: #292929;
-                    stroke: rgba(41, 41, 41, 1);
-                    stroke-width: 0.5;
-                }
-                100% {
-                    fill: #292929;
-                    stroke: rgba(41, 41, 41, 0.5);
-                    stroke-width: 0.5;
-                }
-            }
-        </style>
-    </head>
-    <body>
-        <div class="slogan">
-            <p></p>
-        </div>
-        <script>
-            const slogan = document.querySelector('.slogan');
-            async function loadingLayer() {
-                // await setTimeout(() => {
-                //     new TypeIt(".slogan > p", {
-                //       speed: 70,
-                //       waitUntilVisible: true,
-                //       loop: false,
-                //       })
-                //       .type("전세계의 모든 아트 컬렉션을 한 눈에")
-                //       .go();
-                // }, 300);
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Three.js GLTF Example</title>
+    <style>
+      body {
+        margin: 0;
+        background-color: aliceblue;
+      }
+      canvas {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script>
+      // 장면(Scene) 생성
+      const scene = new THREE.Scene();
 
-                // await setTimeout(() => {
-                //   slogan.style.opacity = 0;
-                // }, 3400);
-                await setTimeout(() => {
-                    slogan.insertAdjacentHTML(
-                        'afterend',
-                        `
-            <svg class="logo" viewBox="0 0 1320 300">
-              <text class='collector-t'x="50%" y="27%" dy="60px" text-anchor="middle">Collector</text>
-              <text class='collector-b'x="50%" y="52%" dy="34px" text-anchor="middle">2 0 3 0</text>
-            </svg>
-          `,
-                    );
-                }, 300);
-            }
-            loadingLayer();
-        </script>
-        <script src="/js/typeit.min.js"></script>
-    </body>
+      // 카메라(Camera) 생성
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.z = 7;
+
+      // 렌더러(Renderer) 생성
+      const renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+      renderer.setClearColor(0xeeeeee);
+      // 조명(Light) 추가
+      const light_1 = new THREE.DirectionalLight(0xffffff, 0.5);
+      const light_2 = new THREE.DirectionalLight(0xffffff, 1);
+      const light_3 = new THREE.DirectionalLight(0xffffff, 1);
+      light_1.position.set(10, 10, 10).normalize();
+      light_2.position.set(0, 10, 0).normalize();
+      light_3.position.set(0, 0, 10).normalize();
+      scene.add(light_1, light_2, light_3);
+
+      // GLTFLoader를 사용하여 GLTF 파일 로드
+      const loader = new THREE.GLTFLoader();
+      let model;
+
+      loader.load(
+        'gistar_basic.glb', // GLB 파일 경로
+        function (gltf) {
+          model = gltf.scene;
+          scene.add(model); // 로드한 GLTF 모델을 씬에 추가
+        },
+        undefined,
+        function (error) {
+          console.error(error); // 로드 오류 처리
+        },
+      );
+
+      // 애니메이션 루프
+      function animate() {
+        requestAnimationFrame(animate);
+
+        // 모델 회전
+        if (model) {
+          model.rotation.x += 0.01;
+          model.rotation.y += 0.01;
+        }
+
+        renderer.render(scene, camera);
+      }
+
+      animate();
+    </script>
+  </body>
 </html>
